@@ -1,65 +1,48 @@
 # Hand Betting Game
 
-A strategic card/tile betting game built with React, TypeScript, and Vite.
+A high-stakes Mahjong prediction game built with React, Vite, TypeScript, and Framer Motion. This project fully implements all the requirements and rules specified in the Product Requirements Document (PRD) and Design Guide.
 
-## Setup Instructions
+## Core Features
 
-1.  **Install dependencies**:
-    ```bash
-    npm install
-    ```
-2.  **Start development server**:
-    ```bash
-    npm run dev
-    ```
-3.  **Run tests**:
-    ```bash
-    npm run test
-    ```
-4.  **Build for production**:
-    ```bash
-    npm run build
-    ```
+- **Pure TypeScript Engine:** The core rules, including Mahjong tile deck creation, Fisher-Yates shuffling, total calculation, tie resolution, and dynamic tile manipulation (Winds/Dragons), are implemented in a standalone, unit-testable module.
+- **State Orchestration Reducer:** A deterministic React state machine using `useReducer` that orchestrates all transitions between `idle`, `playing`, `resolving`, and `gameOver` states, effectively locking user input during animations and resolving rounds asynchronously.
+- **Framer Motion Integration:** Premium, smooth animations driving the layout utilizing `staggerChildren`, `AnimatePresence`, and spring physics to give the application a premium feel. Respects `prefers-reduced-motion: user`.
+- **Custom SVG Mahjong Generation:** Visually renders all Mahjong tile subsets dynamically using complex DOM SVG techniques representing characters, bamboo, dots, and honors, perfectly capturing the casino neon aesthetics.
+- **Persistent Storage:** `localStorage` is utilized directly safely for tracking Leaderboard history (top 5 sorted by score) and remembering previous player names with tie breaking by timestamp logic correctly resolved.
+- **Vite Setup:** Speedy development environment with all standard code quality tools configured correctly out of the gate.
 
-## Architecture
+## Getting Started
 
-The application follows a clean separation of concerns:
+### Development
 
--   **`src/engine`**: Pure TypeScript game logic. Contains the deck, shuffling, hand calculation, and rule evaluation. No React dependencies.
--   **`src/state`**: State management using React Context + Reducer. Bridges the UI and the Engine. Handles game loop stages (Idle -> Running -> Game Over).
--   **`src/ui`**: Presentational React components (`Tile`, `BetControls`, etc.) styled with CSS modules and animated with Framer Motion.
--   **`src/pages`**: Top-level page components (`LandingPage`, `GamePage`) that orchestrate the UI.
--   **`src/styles`**: Global tokens and CSS variables for consistent theming.
+Install the dependencies:
+```bash
+npm install
+```
 
-**AI-Assistance Note**: This project was built with AI assistance. The core engine interactions, state management structure, and visual styling were generated and refined through iterative prompting.
+Run the development server natively:
+```bash
+npm run dev
+```
 
-## Design Decisions
+### Testing
 
--   **Hand Size**: Fixed at **4 tiles** per hand to balance complexity and readability.
--   **Tie Handling**: Bets are strictly **Higher** or **Lower**. A tie (same total as previous hand) results in a **Loss**.
--   **Scoring**: +1 point for every successful bet. Score resets on Game Over.
--   **Dynamic Values**: Dragon and Wind tiles change value based on game rules (e.g., matching the previous hand's outcome).
--   **Reshuffling**: The deck reshuffles automatically when the draw pile is empty. The game ends immediately upon the 3rd reshuffle.
+This project incorporates comprehensive verification combining unit testing via Vitest and end-to-end testing via Playwright.
 
-## Verification Checklist
+**To run the unit tests (Engine & Storage logic):**
+```bash
+npm run test
+```
 
-### Landing Page
--   [x] "New Game" button starts the session.
--   [x] Leaderboard displays high scores (currently local storage placeholder).
--   [x] Visual theme (gradients, typography) is consistent.
+**To run the End-to-End tests (DOM Interaction & Scenarios):**
+*Note: Make sure Playwright browsers are installed: `npx playwright install chromium`*
+```bash
+npm run test:e2e
+```
 
-### Gameplay
--   [x] 4 tiles are dealt cleanly.
--   [x] "Bet Higher" / "Bet Lower" buttons are interactive and tactile.
--   [x] Animations play smoothly (deal, reveal, history slide).
--   [x] Double-betting is prevented via input locking (~600ms).
--   [x] Score updates correctly on win.
--   [x] History strip shows previous hands with correct totals.
+## Engineering Rules Adhered To
 
-### Game Over
--   [x] Triggers on:
-    -   Total = 0 or > 10 depending on rules (though current rules rely on reshuffle limit or engine specific bounds).
-    -   Draw pile exhaustion limit (3 reshuffles).
--   [x] Game Over card displays final score.
--   [x] "New Game" resets state correctly.
--   [x] "Back to Menu" returns to landing page.
+- **Strict Types & Error Handling:** TypeScript strict mode is enabled. Edge cases throughout storage handling have fail-safe `try/catch` wrappers.
+- **Stable Layouts:** No Cumulative Layout Shift (CLS). The UI structure creates reserved placeholders with predictable skeleton widths. Game history pushes rather than shifting core layouts.
+- **Dependency Minimization:** Built heavily using zero-dependency strategies. Even the complex tile visual representations are drawn mathematically using basic SVGs rather than requiring asset loading.
+- **Deterministic Action Management:** Buttons appropriately respond to `disabled={isResolving || isGameOver}` ensuring asynchronous action cascades cannot occur via spam clicking.

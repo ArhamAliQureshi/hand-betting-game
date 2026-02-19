@@ -1,50 +1,38 @@
-/**
- * Engine Type Definitions
- * Source of truth for domain models.
- */
+export type Suit = 'Wan' | 'Sou' | 'Pin' | 'Wind' | 'Dragon';
 
-// Basic Tile Types
-export type TileKind = 'number' | 'dragon' | 'wind';
+export type TileFace =
+  | 'Wan1' | 'Wan2' | 'Wan3' | 'Wan4' | 'Wan5' | 'Wan6' | 'Wan7' | 'Wan8' | 'Wan9'
+  | 'Sou1' | 'Sou2' | 'Sou3' | 'Sou4' | 'Sou5' | 'Sou6' | 'Sou7' | 'Sou8' | 'Sou9'
+  | 'Pin1' | 'Pin2' | 'Pin3' | 'Pin4' | 'Pin5' | 'Pin6' | 'Pin7' | 'Pin8' | 'Pin9'
+  | 'East' | 'South' | 'West' | 'North'
+  | 'Red' | 'Green' | 'White';
 
-export type Suit = 'bamboo' | 'character' | 'circle';
-export type DragonColor = 'red' | 'green' | 'white';
-export type WindDirection = 'east' | 'south' | 'west' | 'north';
-
-export type TileId = string;
-
-export interface TileDefinition {
-  id: TileId;
-  kind: TileKind;
-  face: number | DragonColor | WindDirection;
-  suit?: Suit; // Only for number tiles
+export interface Tile {
+  id: string; // Unique tileId that never changes
+  face: TileFace;
+  suit: Suit;
   baseValue: number;
+  isDynamic: boolean;
+  currentValue: number;
 }
 
-// Immutable Snapshot for History
-// Immutable Snapshot for History
-export interface TileSnapshot {
-  id: TileId; // Renamed from tileId for compatibility
-  kind: TileKind;
-  face: number | DragonColor | WindDirection;
-  suit?: Suit;
-  baseValue: number; // Added for compatibility
-  valueAtThatTime: number;
-}
+export type BetChoice = 'higher' | 'lower';
+export type BetOutcome = 'win' | 'lose';
 
-export interface Hand {
-  id: string;
-  tiles: TileDefinition[];
+export interface GameSnapshot {
+  round: number;
+  hand: Tile[];
   total: number;
+  betChoice?: BetChoice;
+  outcome?: BetOutcome;
 }
 
-// Betting
-export type BetDirection = 'higher' | 'lower';
-export type Outcome = 'win' | 'lose';
-
-// Game Over
-export type GameOverReason = 'tileValueMin' | 'tileValueMax' | 'thirdExhaustion';
-
-export interface GameOverResult {
+export interface GameEngineState {
+  drawPile: Tile[];
+  discardPile: Tile[];
+  currentHand: Tile[];
+  score: number;
+  drawExhaustionCount: number;
   isGameOver: boolean;
-  reason?: GameOverReason;
+  history: GameSnapshot[];
 }

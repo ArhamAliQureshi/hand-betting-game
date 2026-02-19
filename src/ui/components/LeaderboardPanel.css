@@ -1,0 +1,25 @@
+.leaderboard-panel {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.leaderboard-panel.compact {
+  padding: 24px;
+}
+
+.leaderboard-panel.compact .lb-row {
+  padding: 8px 12px;
+}
+
+.leaderboard-panel.compact .lb-rank {
+  font-size: 1rem;
+}
+
+.leaderboard-panel.compact .lb-name {
+  font-size: 1rem;
+}
+
+.leaderboard-panel.compact .lb-score {
+  font-size: 1.2rem;
+}

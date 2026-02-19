@@ -1,20 +1,25 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './e2e',
-  outputDir: './playwright-artifacts/test-results',
-  timeout: 30_000,
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 1 : undefined,
+  reporter: [['json', { outputFile: 'playwright-artifacts/run-report.json' }], ['html']],
   use: {
     baseURL: 'http://localhost:5173',
-    screenshot: 'off',
     trace: 'on-first-retry',
   },
   projects: [
-    { name: 'chromium', use: { browserName: 'chromium' } },
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
   ],
   webServer: {
     command: 'npm run dev',
-    port: 5173,
-    reuseExistingServer: true,
+    url: 'http://localhost:5173',
+    reuseExistingServer: !process.env.CI,
   },
 });

@@ -1,70 +1,31 @@
 :root {
-  /* ── Light Theme Palette ── */
-  --color-bg-canvas: #f0ece4;
-  --color-bg-surface: #ffffff;
-  --color-bg-surface-elevated: #ffffff;
-  --color-bg-header: #faf8f5;
+  /* Background */
+  --bg-0: #07040f;
+  --bg-1: #14082a;
+  --bokeh-pink: rgba(255, 80, 170, 0.18);
+  --bokeh-gold: rgba(255, 200, 80, 0.16);
 
-  --color-text-primary: #2c2c2c;
-  --color-text-secondary: #6b6b6b;
-  --color-text-muted: #999999;
-  --color-text-heading: #333333;
+  /* Surfaces */
+  --surface-0: rgba(22, 10, 40, 0.78);
+  --surface-1: rgba(30, 14, 56, 0.75);
 
-  --color-accent: #d4853b;
-  --color-accent-hover: #c0722e;
-  --color-btn-lower: #4a5568;
-  --color-btn-lower-hover: #3c4759;
+  /* Borders and glow */
+  --border: rgba(255, 200, 100, 0.35);
+  --glow-purple: rgba(160, 90, 255, 0.35);
+  --glow-gold: rgba(255, 200, 90, 0.3);
 
-  --color-border: #e2ddd5;
-  --color-border-light: #eae6de;
-  --color-divider: #e8e3db;
+  /* Text */
+  --text: #f3f1ff;
+  --muted: rgba(243, 241, 255, 0.72);
 
-  --color-tile-bg: #faf8f2;
-  --color-tile-border: #c8c2b8;
-  --color-tile-shadow: rgba(0, 0, 0, 0.08);
+  /* Accents */
+  --purple: #8f4bff;
+  --magenta: #ff3fa6;
+  --gold: #ffc24b;
+  --bet-red: #c8132c;
+  --bet-blue: #1b4cff;
 
-  --color-success: #48bb78;
-  --color-danger: #f56565;
-
-  /* ── Spacing ── */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
-
-  /* ── Typography ── */
-  --font-family-body: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-family-heading: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 2rem;
-  --font-size-hero: 2.5rem;
-
-  /* ── Radii ── */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-full: 9999px;
-
-  /* ── Shadows ── */
-  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.1);
-  --shadow-tile: 0 2px 4px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-tile-bevel: 0 3px 0 #d4cfc6;
-  --shadow-btn: 0 2px 4px rgba(0, 0, 0, 0.12);
-  --shadow-btn-active: 0 1px 2px rgba(0, 0, 0, 0.12);
-
-  /* ── Transitions ── */
-  --transition-fast: 150ms ease;
-  --transition-normal: 250ms ease;
+  /* Shadows */
+  --shadow-tile: 0 18px 40px rgba(0, 0, 0, 0.45);
+  --shadow-card: 0 24px 70px rgba(0, 0, 0, 0.4);
 }

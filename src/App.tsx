@@ -1,20 +1,27 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { LandingPage } from './pages/LandingPage'
-import { GamePage } from './pages/GamePage'
-import { GameProvider } from './state/context'
-import './index.css'
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Landing } from './pages/Landing';
+import { Gameplay } from './pages/Gameplay';
+import { GameProvider } from './state/Store';
+import { MotionConfig } from 'framer-motion';
 
-function App() {
+export const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <GameProvider>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/game" element={<GamePage />} />
-        </Routes>
-      </GameProvider>
-    </BrowserRouter>
-  )
-}
+    <div className="app-container">
+      <div className="frame-container" data-testid="game-frame">
+        <GameProvider>
+          <MotionConfig reducedMotion="user">
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Landing />} />
+                <Route path="/game" element={<Gameplay />} />
+              </Routes>
+            </BrowserRouter>
+          </MotionConfig>
+        </GameProvider>
+      </div>
+    </div>
+  );
+};
 
-export default App
+export default App;
