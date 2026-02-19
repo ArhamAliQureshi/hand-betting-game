@@ -1,0 +1,56 @@
+.leaderboard-card {
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-5);
+}
+
+.leaderboard-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text-heading);
+  margin-bottom: var(--space-4);
+  text-align: center;
+}
+
+.leaderboard-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.leaderboard-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+}
+
+.leaderboard-item:nth-child(odd) {
+  background: rgba(0,0,0,0.02);
+}
+
+.leaderboard-rank {
+  font-weight: 700;
+  color: var(--color-text-muted);
+  min-width: 20px;
+}
+
+.leaderboard-icon {
+  font-size: var(--font-size-base);
+}
+
+.leaderboard-name {
+  flex: 1;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.leaderboard-score {
+  font-weight: 700;
+  color: var(--color-text-heading);
+  font-variant-numeric: tabular-nums;
+}

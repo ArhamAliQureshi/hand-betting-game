@@ -1,0 +1,32 @@
+.input-player-name {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto var(--space-6);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-lg);
+  font-family: var(--font-family-body);
+  text-align: center;
+  color: var(--color-text-primary);
+  background: var(--color-bg-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.input-player-name::placeholder {
+  color: var(--color-text-muted);
+}
+
+.input-player-name:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 4px rgba(212, 133, 59, 0.15);
+}
+
+.btn-new-game:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
