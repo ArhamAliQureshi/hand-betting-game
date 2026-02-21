@@ -13,7 +13,12 @@ export const ScoresPanel: React.FC = () => {
 
   return (
     <div className="panel scores-panel" data-testid="scores-panel">
-      <h2>Scores</h2>
+      <div className="scores-panel-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '16px' }}>
+        <h2 style={{ margin: 0 }}>Scores</h2>
+        <div data-testid="current-score" style={{ color: 'var(--gold)', fontWeight: 'bold', fontSize: '1.25rem', fontVariantNumeric: 'tabular-nums', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+          Current: {engineState.score}
+        </div>
+      </div>
       <div className="scores-list">
         {recentHistory.length === 0 ? (
           <p className="scores-empty">-</p>

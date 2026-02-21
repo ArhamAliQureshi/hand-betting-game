@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useGameState, useGameDispatch } from '../../state/Store';
-import { saveToLeaderboard } from '../../storage/leaderboard';
 import { Button } from './Button';
 import './GameOverModal.css';
 
@@ -10,13 +9,6 @@ export const GameOverModal: React.FC = () => {
   const state = useGameState();
   const dispatch = useGameDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // When game over modal mounts, save to leaderboard immediately
-    if (state.engineState && state.status === 'gameOver') {
-      saveToLeaderboard(state.playerName, state.engineState.score);
-    }
-  }, [state.status, state.engineState, state.playerName]);
 
   if (!state.engineState || state.status !== 'gameOver') return null;
 

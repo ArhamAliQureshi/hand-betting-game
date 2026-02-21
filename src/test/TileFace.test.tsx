@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { TileFaceUI } from '../ui/tiles/TileFace';
@@ -24,12 +23,10 @@ describe('TileFaceUI', () => {
       const svg = container.querySelector('svg');
       expect(svg).toBeInTheDocument();
       
-      // Dynamic ones should render the badge
-      if (def.isDynamic) {
-        const badge = container.querySelector('.dynamic-badge');
-        expect(badge).toBeInTheDocument();
-        expect(badge).toHaveTextContent(String(def.baseValue));
-      }
+      // All tiles should render the badge
+      const badge = container.querySelector('.dynamic-badge');
+      expect(badge).toBeInTheDocument();
+      expect(badge).toHaveTextContent(String(def.baseValue));
     }
   });
 });

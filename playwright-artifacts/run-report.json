@@ -64,25 +64,25 @@
   },
   "suites": [
     {
-      "title": "layout.spec.ts",
-      "file": "layout.spec.ts",
+      "title": "leaderboard.spec.ts",
+      "file": "leaderboard.spec.ts",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "Layout regression",
-          "file": "layout.spec.ts",
+          "title": "Leaderboard Persistence",
+          "file": "leaderboard.spec.ts",
           "line": 3,
           "column": 6,
           "specs": [
             {
-              "title": "layout does not shift horizontally on bet clicks",
+              "title": "leaderboard saves after a natural game over",
               "ok": true,
               "tags": [],
               "tests": [
                 {
-                  "timeout": 30000,
+                  "timeout": 240000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
@@ -92,12 +92,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 19609,
+                      "duration": 98725,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-02-19T21:54:16.823Z",
+                      "startTime": "2026-02-21T18:08:39.311Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -105,13 +105,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "9f98fd8c8d1538f5ebbb-6840fcd7cb3193806b25",
-              "file": "layout.spec.ts",
+              "id": "5498c40e8c4b7c4c40a8-25c1f968cb79d6531a56",
+              "file": "leaderboard.spec.ts",
               "line": 5,
               "column": 3
             },
             {
-              "title": "no unexpected horizontal scroll",
+              "title": "clear leaderboard wipes storage",
               "ok": true,
               "tags": [],
               "tests": [
@@ -126,12 +126,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 607,
+                      "duration": 531,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-02-19T21:54:16.829Z",
+                      "startTime": "2026-02-21T18:08:39.311Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -139,9 +139,9 @@
                   "status": "expected"
                 }
               ],
-              "id": "9f98fd8c8d1538f5ebbb-56735a56da503291a0f3",
-              "file": "layout.spec.ts",
-              "line": 40,
+              "id": "5498c40e8c4b7c4c40a8-79d8014025d9776368ca",
+              "file": "leaderboard.spec.ts",
+              "line": 94,
               "column": 3
             }
           ]
@@ -151,8 +151,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-02-19T21:54:16.093Z",
-    "duration": 21060.533000000003,
+    "startTime": "2026-02-21T18:08:38.584Z",
+    "duration": 100184.707,
     "expected": 2,
     "skipped": 0,
     "unexpected": 0,

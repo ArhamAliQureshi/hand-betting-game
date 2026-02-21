@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getSavedPlayerName, savePlayerName } from '../storage/player';
-import { getLeaderboard, clearLeaderboard, LeaderboardEntry } from '../storage/leaderboard';
+import { loadLeaderboard, clearLeaderboard, LeaderboardEntry } from '../storage/leaderboard';
 import { useGameDispatch } from '../state/Store';
 import { Button } from '../ui/components/Button';
 import './Landing.css';
@@ -15,7 +15,12 @@ export const Landing: React.FC = () => {
 
   useEffect(() => {
     setName(getSavedPlayerName());
-    setLeaderboard(getLeaderboard());
+    setLeaderboard(loadLeaderboard());
+    
+    // Listen for storage changes from other components/pages
+    const handler = () => setLeaderboard(loadLeaderboard());
+    window.addEventListener('storage', handler);
+    return () => window.removeEventListener('storage', handler);
   }, []);
 
   const isValidName = (n: string) => {

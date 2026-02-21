@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { createFreshDeck, shuffle, HONOR_STARTING_VALUE } from '../engine/tiles';
-import { calculateTotal, createInitialState, resolveBet } from '../engine/game';
-import { Tile, GameEngineState } from '../engine/types';
+import { createFreshDeck } from '../engine/tiles';
+import { createInitialState, resolveBet } from '../engine/game';
 
 describe('Game Engine', () => {
   it('should initialize game state correctly', () => {
@@ -140,5 +139,31 @@ describe('Game Engine', () => {
     
     expect(state.drawExhaustionCount).toBe(3);
     expect(state.isGameOver).toBe(true);
+  });
+
+  it('history snapshots maintain immutable references to tile values', () => {
+    let state = createInitialState();
+    
+    // Inject a hand with a wind
+    state.currentHand = [
+      { id: '1', face: 'Wan1', suit: 'Wan', baseValue: 1, isDynamic: false, currentValue: 1 },
+      { id: '2', face: 'East', suit: 'Wind', baseValue: 5, isDynamic: true, currentValue: 6 }, // explicitly set to 6
+      { id: '3', face: 'Wan2', suit: 'Wan', baseValue: 2, isDynamic: false, currentValue: 2 },
+      { id: '4', face: 'Wan3', suit: 'Wan', baseValue: 3, isDynamic: false, currentValue: 3 },
+    ];
+    
+    // Draw pile gives lower total hand to trigger 'win', which pushes the wind tile to 7
+    state.drawPile = [
+      { id: '5', face: 'Wan1', suit: 'Wan', baseValue: 1, isDynamic: false, currentValue: 1 },
+      { id: '6', face: 'Wan1', suit: 'Wan', baseValue: 1, isDynamic: false, currentValue: 1 },
+      { id: '7', face: 'Wan1', suit: 'Wan', baseValue: 1, isDynamic: false, currentValue: 1 },
+      { id: '8', face: 'Wan1', suit: 'Wan', baseValue: 1, isDynamic: false, currentValue: 1 },
+    ];
+    
+    const nextState = resolveBet(state, 'lower');
+    
+    // The history snapshot (old hand) must strictly remain 6
+    const historyWind = nextState.history[0].hand.find(t => t.id === '2');
+    expect(historyWind?.currentValue).toBe(6);
   });
 });

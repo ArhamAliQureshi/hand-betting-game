@@ -41,20 +41,32 @@ A single-player hand betting game using Mahjong tiles. The player predicts wheth
 - Bet Lower: predict next hand total will be strictly lower than current total.
 - Tie handling: if next total equals current total, the bet is treated as a loss.
 
-### 6.4 Tile categories and values
-The game uses Mahjong tiles, rendered as real Mahjong faces.
+### 6.4 Tile categories and values (restricted set)
+The game uses only these Mahjong tile categories:
+- Number tiles (1 to 9) from the three suits:
+  - Characters (Wan), Bamboo (Sou), Dots (Pin)
+- Winds (East, South, West, North)
+- Dragons (Red, Green, White)
 
-#### Numeric suit tiles
-- Suits: Characters (Wan), Bamboo (Sou), Dots (Pin)
+No other Mahjong tiles exist in this game (no Flowers, Seasons, Jokers, etc).
+
+#### Number tiles
 - Values: 1 to 9
-- Base value equals the number shown on tile
-- Numeric tiles never change value during the game
+- Value equals the number shown on the tile
+- Number tiles never change value during the game
 
-#### Honor tiles
-- Winds: East, South, West, North
-- Dragons: Red, Green, White
-- Each wind tile and each dragon tile has its own dynamic value that can change over time
-- Dynamic values are per tile instance, tracked by unique tileId
+#### Winds
+- Tiles: 東 南 西 北
+- Each wind tile has a dynamic value tracked per tileId
+
+#### Dragons
+- Tiles: Red 中, Green 發, White framed blank
+- Each dragon tile has a dynamic value tracked per tileId
+
+### 6.4.1 Initial dynamic values (required)
+- All Wind tiles start with dynamic value 5.
+- All Dragon tiles start with dynamic value 5.
+- This value is per tile instance (tileId) and persists across reshuffles.
 
 ### 6.5 Dynamic value update rule
 After each round resolves:
@@ -64,7 +76,7 @@ After each round resolves:
 - If player loses:
   - For every Wind tile in the current hand: its dynamic value decreases by 1
   - For every Dragon tile in the current hand: its dynamic value decreases by 1
-- Numeric suit tiles do not change
+- Number tiles do not change
 
 Important: dynamic values persist across reshuffles and across the whole game, until game over.
 
@@ -79,7 +91,7 @@ Important: dynamic values persist across reshuffles and across the whole game, u
 
 ### 6.7 Reshuffle rule (draw pile exhaustion)
 When the Draw Pile runs out of tiles:
-1) Add a fresh full deck worth of tiles (new tile instances with new tileIds) to the game.
+1) Add a fresh deck generated from the restricted tile set (Numbers, Winds, Dragons only), using new tileIds.
 2) Combine that fresh deck with the Discard Pile.
 3) Shuffle the combined set to become the new Draw Pile.
 4) Empty the Discard Pile.
@@ -148,7 +160,6 @@ Must include:
   - Shows previous hands with smaller tiles and totals
   - Bounded height
   - Horizontal scroll
-- Optional score recap panel is allowed but must not replace required History
 
 ### 7.4 Game Over screen requirements
 Must include:
@@ -164,9 +175,9 @@ Must include:
 - Tile faces must be created in-repo as SVG (preferred) or generated assets.
 - Do not download or embed external copyrighted tile images.
 
-Tile faces must cover:
+Tile faces must cover ONLY:
 - Characters 1 to 9 (Chinese numerals plus 萬)
-- Bamboo 1 to 9 (bamboo sticks, with a distinct 1-bamboo bird if desired but optional)
+- Bamboo 1 to 9 (bamboo sticks)
 - Dots 1 to 9 (pip patterns)
 - Winds: 東 南 西 北
 - Dragons:
@@ -211,7 +222,7 @@ Constraints:
 Engine tests must cover:
 - Correct hand totals
 - Win and lose update rules for winds and dragons
-- Numeric tiles do not change
+- Number tiles do not change
 - Game over at 0 and 10
 - Reshuffle procedure and exhaustion counter increments
 - Third exhaustion triggers game over

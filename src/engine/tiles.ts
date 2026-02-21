@@ -3,10 +3,9 @@ import { Tile, TileFace, Suit } from './types';
 // Constants
 export const HONOR_STARTING_VALUE = 5;
 
-// Mahjong deck composition (1 of each per fresh deck)
-// A standard Mahjong deck has 4 of each tile, but the PRD specifies
-// "Add a fresh full deck worth of tiles (new tile instances with new tileIds) to the game."
-// We assume 4 of each tile type like a standard Mahjong deck.
+// Mahjong deck composition
+// Custom specific request: 1 of each per fresh deck (34 tiles total)
+// rather than a standard 136-tile deck with 4 of each tile type.
 export const TILE_CATALOG: { face: TileFace; suit: Suit; baseValue: number; isDynamic: boolean }[] = [];
 
 // Populate numeric suits
@@ -57,8 +56,8 @@ let nextId = 1;
 export function createFreshDeck(): Tile[] {
   const deck: Tile[] = [];
   
-  // Mahjong has 4 copies of each tile
-  for (let copy = 0; copy < 4; copy++) {
+  // As per PRD constraint change, we use a custom 34-tile single-copy deck
+  for (let copy = 0; copy < 1; copy++) {
     for (const def of TILE_CATALOG) {
       deck.push({
         id: `tile_${nextId++}`,

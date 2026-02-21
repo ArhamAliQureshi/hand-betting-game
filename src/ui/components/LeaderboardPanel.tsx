@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getLeaderboard, LeaderboardEntry } from '../../storage/leaderboard';
+import { loadLeaderboard, LeaderboardEntry } from '../../storage/leaderboard';
 import './LeaderboardPanel.css';
 
 interface Props {
@@ -10,10 +10,10 @@ export const LeaderboardPanel: React.FC<Props> = ({ isGameplay }) => {
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
 
   useEffect(() => {
-    setLeaderboard(getLeaderboard());
+    setLeaderboard(loadLeaderboard());
     
     // Listen for storage changes to keep synced without polling
-    const handler = () => setLeaderboard(getLeaderboard());
+    const handler = () => setLeaderboard(loadLeaderboard());
     window.addEventListener('storage', handler);
     return () => window.removeEventListener('storage', handler);
   }, []);

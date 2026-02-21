@@ -1,4 +1,4 @@
-const PLAYER_NAME_KEY = 'hand_betting_player_name';
+import { PLAYER_NAME_KEY } from './keys';
 
 export function getSavedPlayerName(): string {
   try {

@@ -1,5 +1,6 @@
 import { GameEngineState, BetChoice } from '../engine/types';
 import { createInitialState, resolveBet } from '../engine/game';
+import { addLeaderboardEntry } from '../storage/leaderboard';
 
 export type GameStatus = 'idle' | 'playing' | 'resolving' | 'gameOver';
 
@@ -7,6 +8,7 @@ export interface AppGameState {
   engineState: GameEngineState | null;
   status: GameStatus;
   playerName: string;
+  gameSessionId: string;
 }
 
 export type Action =
@@ -19,6 +21,7 @@ export const initialAppState: AppGameState = {
   engineState: null,
   status: 'idle',
   playerName: '',
+  gameSessionId: '',
 };
 
 export function gameReducer(state: AppGameState, action: Action): AppGameState {
@@ -29,6 +32,7 @@ export function gameReducer(state: AppGameState, action: Action): AppGameState {
         engineState: createInitialState(),
         status: 'playing',
         playerName: action.payload.playerName,
+        gameSessionId: crypto.randomUUID(),
       };
 
     case 'PLACE_BET':
@@ -43,9 +47,21 @@ export function gameReducer(state: AppGameState, action: Action): AppGameState {
     case 'RESOLVE_ROUND_COMPLETE':
       if (state.status !== 'resolving' || !state.engineState) return state;
       
+      const isGameOver = state.engineState.isGameOver;
+
+      // Save to leaderboard exactly once when transitioning to game over
+      if (isGameOver) {
+        addLeaderboardEntry({
+          name: state.playerName,
+          score: state.engineState.score,
+          ts: Date.now(),
+          gameSessionId: state.gameSessionId,
+        });
+      }
+
       return {
         ...state,
-        status: state.engineState.isGameOver ? 'gameOver' : 'playing',
+        status: isGameOver ? 'gameOver' : 'playing',
       };
 
     case 'QUIT_GAME':
@@ -54,6 +70,7 @@ export function gameReducer(state: AppGameState, action: Action): AppGameState {
         engineState: null,
         status: 'idle',
         playerName: '',
+        gameSessionId: '',
       };
 
     default:

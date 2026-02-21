@@ -121,11 +121,9 @@ export const TileFaceUI: React.FC<Props> = ({ tile, size = 'large' }) => {
         {(tile.suit === 'Wind' || tile.suit === 'Dragon') && renderHonor(tile.face)}
       </div>
 
-      {tile.isDynamic && (
-        <div className="dynamic-badge">
-          {tile.currentValue}
-        </div>
-      )}
+      <div className="dynamic-badge" data-testid={`tile-badge-${tile.id}`}>
+        {tile.currentValue}
+      </div>
     </div>
   );
 };
