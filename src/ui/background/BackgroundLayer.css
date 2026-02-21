@@ -1,0 +1,44 @@
+.casino-background-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--bg-color, #1a0b2e); /* Fallback base matching theme */
+  overflow: hidden;
+}
+
+/* Vignette overlay to ensure UI readability remains crisp */
+.casino-vignette-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center, transparent 0%, rgba(15, 5, 24, 0.8) 100%);
+  z-index: 1; /* Above the canvas but below the app UI */
+}
+
+/* Fallback CSS animation if WebGL fails or reduced motion is on */
+.casino-fallback-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, #2a114a 0%, #150524 100%);
+}
+
+@keyframes slowOrbit {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.05); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.casino-fallback-animated {
+  animation: slowOrbit 60s linear infinite;
+  background: 
+    radial-gradient(circle at 30% 70%, rgba(200, 160, 50, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 70% 30%, rgba(180, 50, 200, 0.1) 0%, transparent 40%);
+}
+
+/* Respect user's OS-level motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .casino-fallback-animated {
+    animation: none;
+  }
+}

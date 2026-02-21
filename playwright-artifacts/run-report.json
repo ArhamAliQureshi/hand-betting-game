@@ -92,12 +92,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 98725,
+                      "duration": 98058,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-02-21T18:08:39.311Z",
+                      "startTime": "2026-02-21T19:03:07.576Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -126,12 +126,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 531,
+                      "duration": 607,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-02-21T18:08:39.311Z",
+                      "startTime": "2026-02-21T19:03:07.574Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -141,7 +141,7 @@
               ],
               "id": "5498c40e8c4b7c4c40a8-79d8014025d9776368ca",
               "file": "leaderboard.spec.ts",
-              "line": 94,
+              "line": 99,
               "column": 3
             }
           ]
@@ -151,8 +151,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-02-21T18:08:38.584Z",
-    "duration": 100184.707,
+    "startTime": "2026-02-21T19:03:06.888Z",
+    "duration": 99443.33,
     "expected": 2,
     "skipped": 0,
     "unexpected": 0,
