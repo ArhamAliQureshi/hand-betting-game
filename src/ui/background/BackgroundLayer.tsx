@@ -1,8 +1,8 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import './BackgroundLayer.css';
 
-// Lazy load the heavy Three.js component
-const CasinoBackground3D = React.lazy(() => import('./CasinoBackground3D'));
+// Lazy load the lightweight Canvas component
+const MahjongTileField = React.lazy(() => import('./MahjongTileField'));
 
 export const BackgroundLayer: React.FC = () => {
   const [shouldRender3D, setShouldRender3D] = useState(true);
@@ -45,7 +45,7 @@ export const BackgroundLayer: React.FC = () => {
     <div className="casino-background-wrapper" data-testid="casino-bg-wrapper">
       {shouldRender3D && !reducedMotion ? (
         <Suspense fallback={<FallbackBackground animated={true} />}>
-          <CasinoBackground3D />
+          <MahjongTileField />
         </Suspense>
       ) : (
         <FallbackBackground animated={!reducedMotion} />

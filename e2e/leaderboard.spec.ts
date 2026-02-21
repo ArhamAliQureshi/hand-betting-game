@@ -20,8 +20,8 @@ test.describe('Leaderboard Persistence', () => {
     // 3. Verify Universal Badges
     await expect(page.locator('.current-hand-panel .dynamic-badge')).toHaveCount(4);
     
-    // Verify 3D Background mounted successfully behind UI without intercepting pointers
-    const canvas = page.getByTestId('casino-bg-canvas');
+    // Verify 2D Canvas Background mounted successfully behind UI without intercepting pointers
+    const canvas = page.getByTestId('mahjong-bg-canvas');
     const fallback = page.getByTestId('casino-fallback-bg');
     await expect(canvas.or(fallback)).toBeVisible();
     
