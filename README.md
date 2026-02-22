@@ -1,48 +1,140 @@
 # Hand Betting Game
 
-A high-stakes Mahjong prediction game built with React, Vite, TypeScript, and Framer Motion. This project fully implements all the requirements and rules specified in the Product Requirements Document (PRD) and Design Guide.
+Live Demo: https://hand-betting-game.vercel.app/
 
-## Core Features
+A casino themed, Mahjong inspired hand betting game. Each round shows a 4 tile hand and its total. You bet whether the next hand total will be higher or lower. Winds and Dragons have dynamic values that change over time, creating a risk curve and a clear game over state.
 
-- **Pure TypeScript Engine:** The core rules, including Mahjong tile deck creation, Fisher-Yates shuffling, total calculation, tie resolution, and dynamic tile manipulation (Winds/Dragons), are implemented in a standalone, unit-testable module.
-- **State Orchestration Reducer:** A deterministic React state machine using `useReducer` that orchestrates all transitions between `idle`, `playing`, `resolving`, and `gameOver` states, effectively locking user input during animations and resolving rounds asynchronously.
-- **Framer Motion Integration:** Premium, smooth animations driving the layout utilizing `staggerChildren`, `AnimatePresence`, and spring physics to give the application a premium feel. Respects `prefers-reduced-motion: user`.
-- **Custom SVG Mahjong Generation:** Visually renders all Mahjong tile subsets dynamically using complex DOM SVG techniques representing characters, bamboo, dots, and honors, perfectly capturing the casino neon aesthetics.
-- **Persistent Storage:** `localStorage` is utilized directly safely for tracking Leaderboard history (top 5 sorted by score) and remembering previous player names with tie breaking by timestamp logic correctly resolved.
-- **Vite Setup:** Speedy development environment with all standard code quality tools configured correctly out of the gate.
+## Features
+- Landing page
+  - Player name input with validation
+  - Persistent leaderboard (Top 5) stored in localStorage
+  - Clear leaderboard with confirmation
+- Gameplay
+  - 4 tile hand with per tile value badges
+  - Total calculation and Higher or Lower betting
+  - Smooth deal and resolve transitions
+  - History panel for previous hands
+  - Draw and discard pile counts and reshuffle handling
+- Game over
+  - Triggers on dynamic tile value reaching 0 or 10
+  - Triggers when draw pile exhaustion occurs 3 times
+  - Automatically saves final score to leaderboard exactly once per game session
+- Background polish
+  - Animated Mahjong tile field background that stays behind the UI and does not block interactions
+  - Respects prefers-reduced-motion
 
-## Getting Started
+## Game rules summary
+- Hand size: 4 tiles
+- Bet Higher: next total must be strictly greater than current total
+- Bet Lower: next total must be strictly less than current total
+- Tie counts as loss
+- Tile set used
+  - Number tiles 1 to 9 in Characters, Bamboo, Dots
+  - Winds: East, South, West, North
+  - Dragons: Red, Green, White
+- Values
+  - Number tiles: fixed numeric value 1 to 9
+  - Winds and Dragons: dynamic value per tile instance, starts at 5
+- Dynamic updates after each round
+  - Win: each Wind or Dragon in the resolved hand increases by 1
+  - Loss: each Wind or Dragon in the resolved hand decreases by 1
+- Reshuffle
+  - When draw pile runs out, combine discard pile with a fresh restricted set deck and reshuffle
+  - Count how many times this happens
+- Game over
+  - Any Wind or Dragon reaches 0 or 10
+  - Draw pile runs out for the 3rd time
 
-### Development
+## Tech stack
+- React + TypeScript
+- Vite
+- CSS (custom design system)
+- Vitest (unit tests)
+- Playwright (end to end tests)
+- Deployed on Vercel
 
-Install the dependencies:
+## Local setup
+Prerequisites:
+- Node.js 18 or newer
+
+Install:
 ```bash
 npm install
 ```
 
-Run the development server natively:
+Run dev server:
 ```bash
 npm run dev
 ```
 
-### Testing
+Build:
+```bash
+npm run build
+```
 
-This project incorporates comprehensive verification combining unit testing via Vitest and end-to-end testing via Playwright.
+Preview production build:
+```bash
+npm run preview
+```
 
-**To run the unit tests (Engine & Storage logic):**
+## Testing
+Unit tests:
 ```bash
 npm run test
 ```
 
-**To run the End-to-End tests (DOM Interaction & Scenarios):**
-*Note: Make sure Playwright browsers are installed: `npx playwright install chromium`*
+End to end tests:
 ```bash
-npm run test:e2e
+npx playwright install
+npx playwright test
 ```
 
-## Engineering Rules Adhered To
+## Architecture
+The codebase is organized to stay feature-ready and easy to extend.
 
-- **Strict Types & Error Handling:** TypeScript strict mode is enabled. Edge cases throughout storage handling have fail-safe `try/catch` wrappers.
-- **Stable Layouts:** No Cumulative Layout Shift (CLS). The UI structure creates reserved placeholders with predictable skeleton widths. Game history pushes rather than shifting core layouts.
-- **Dependency Minimization:** Built heavily using zero-dependency strategies. Even the complex tile visual representations are drawn mathematically using basic SVGs rather than requiring asset loading.
-- **Deterministic Action Management:** Buttons appropriately respond to `disabled={isResolving || isGameOver}` ensuring asynchronous action cascades cannot occur via spam clicking.
+- Engine (pure logic)
+  - Deck building, dealing, totals, win or loss evaluation
+  - Dynamic value updates and game over checks
+  - Reshuffle procedure and exhaustion counter
+- State layer (orchestration)
+  - Round lifecycle, UI locking, animations timing hooks
+  - Single point of persistence on game over with idempotency guard
+- UI layer (presentation)
+  - Panels, tile rendering, transitions and motion
+  - Background layer mounted behind the UI and never intercepting pointer events
+- Storage
+  - Leaderboard and player name persistence via localStorage with schema guarding
+
+This separation allows adding new features like different deck compositions, alternative scoring, difficulty modes, new panels, or extended animations without rewriting the engine or UI.
+
+## Accessibility and UX
+- Keyboard focus states for interactive controls
+- prefers-reduced-motion support
+- Background does not block clicks and is intentionally subtle to keep readability
+
+## AI usage disclosure
+I used AI as an assistant during development, primarily for:
+- Initial scaffolding suggestions and iterative refactoring ideas
+- Animation and UI polish ideas
+- Writing and refining documentation text
+
+Handwritten by me:
+- Game engine rules and state transitions
+- Persistence and leaderboard logic, including idempotent save behavior
+- UI layout and CSS implementation
+- Unit tests and Playwright tests
+- Debugging and fixing production issues found during testing
+
+Verification steps I used:
+- Manual gameplay testing across many rounds to confirm stability and game over conditions
+- Vitest unit tests for core rules and edge cases
+- Playwright E2E tests that play the game like a real user and validate persistence and UI stability
+
+## Deployment
+Deployed on Vercel:
+https://hand-betting-game.vercel.app/
+
+## Notes for reviewers
+- Leaderboard is localStorage-based by design, no backend is required.
+- Game over saving is triggered exactly once per game session, guarded against duplicate writes.
+- UI is designed for stability after many rounds, avoiding layout shift and uncontrolled growth.
