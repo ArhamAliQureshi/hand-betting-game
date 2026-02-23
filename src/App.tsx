@@ -5,6 +5,7 @@ import { Gameplay } from './pages/Gameplay';
 import { GameProvider } from './state/Store';
 import { MotionConfig } from 'framer-motion';
 import { BackgroundLayer } from './ui/background/BackgroundLayer';
+import { Analytics } from '@vercel/analytics/react';
 
 export const App: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ export const App: React.FC = () => {
           </MotionConfig>
         </GameProvider>
       </div>
+      <Analytics />
     </div>
   );
 };
